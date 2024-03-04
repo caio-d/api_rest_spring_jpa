@@ -42,4 +42,21 @@ public class EnderecoController {
         return ResponseEntity.ok(new EnderecoResponse(endereco));
     }
 
+    @PatchMapping("{id}")
+    public ResponseEntity<EnderecoResponse> patch(@PathVariable Long id, @RequestBody EnderecoRequest enderecoRequest) {
+
+        Endereco endereco = service.findById(id);
+
+        if (enderecoRequest.logradouro() != null) endereco.setLogradouro(enderecoRequest.logradouro());
+        if (enderecoRequest.cep() != null) endereco.setCep(enderecoRequest.cep());
+        if (enderecoRequest.numero() != null) endereco.setNumero(enderecoRequest.numero());
+        if (enderecoRequest.cidade() != null) endereco.setCidade(enderecoRequest.cidade());
+        if (enderecoRequest.estado() != null) endereco.setEstado(enderecoRequest.estado());
+        if (enderecoRequest.pessoa_id() != null) endereco.setPessoa_id(enderecoRequest.pessoa_id());
+
+        service.save(endereco);
+
+        return ResponseEntity.ok().body(new EnderecoResponse(endereco));
+    }
+
 }

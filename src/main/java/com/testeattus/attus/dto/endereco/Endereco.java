@@ -20,10 +20,7 @@ public class Endereco {
     private Long numero;
     private String cidade;
     private String estado;
-
-    @ManyToOne
-    @JoinColumn(name = "pessoa_id")
-    private Pessoa pessoa;
+    private Long pessoa_id;
 
     public Endereco(@NonNull EnderecoRequest enderecoRequest){
         this.logradouro = enderecoRequest.logradouro();
@@ -31,6 +28,7 @@ public class Endereco {
         this.numero = enderecoRequest.numero();
         this.cidade = enderecoRequest.cidade();
         this.estado = enderecoRequest.estado();
+        this.pessoa_id = enderecoRequest.pessoa_id();
     }
 
 }

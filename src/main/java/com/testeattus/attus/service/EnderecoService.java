@@ -28,6 +28,6 @@ public class EnderecoService {
 
     public Endereco findById(Long id) throws EnderecoNotFoundException {
         return this.repository.findById(id)
-                .orElseThrow(() -> new EnderecoNotFoundException("Carteira não encontrada com o ID: " + id));
+                .orElseThrow(() -> new EnderecoNotFoundException("Endereco não encontrado com o ID: " + id));
     }
 }

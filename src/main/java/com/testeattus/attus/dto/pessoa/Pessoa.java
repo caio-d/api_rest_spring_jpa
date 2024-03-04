@@ -25,16 +25,8 @@ public class Pessoa {
     private String data_nascimento;
     private Long endereco_principal_id;
 
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pessoa_id", cascade = CascadeType.ALL)
     private List<Endereco> enderecos = new ArrayList<>();
-
-    public Pessoa(PessoaResponse pessoaResponse) {
-        this.id = pessoaResponse.id();
-        this.nome = pessoaResponse.nome();
-        this.data_nascimento = pessoaResponse.data_nascimento();
-        this.enderecos = pessoaResponse.enderecos();
-        this.endereco_principal_id = pessoaResponse.endereco_principal_id();
-    }
 
     public Pessoa(PessoaRequest pessoaRequest) {
         this.nome = pessoaRequest.nome();
