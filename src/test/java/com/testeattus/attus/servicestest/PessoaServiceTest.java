@@ -1,6 +1,6 @@
 package com.testeattus.attus.servicestest;
 
-import com.testeattus.attus.dto.endereco.Endereco;
+import com.testeattus.attus.controller.PessoaController;
 import com.testeattus.attus.dto.pessoa.Pessoa;
 import com.testeattus.attus.dto.pessoa.PessoaRequest;
 import com.testeattus.attus.dto.pessoa.PessoaResponse;
@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -21,14 +20,17 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class PessoaServiceTest {
 
     @Autowired
-    private PessoaService pessoaService;
+    private PessoaService service;
+
+    @Autowired
+    private PessoaController controller;
 
     @MockBean
     private PessoaRepository pessoaRepository;
@@ -41,9 +43,10 @@ public class PessoaServiceTest {
         PessoaResponse pessoaResponse = new PessoaResponse(pessoa);
 
         when(pessoaRepository.save(any(Pessoa.class))).thenReturn(pessoa);
-        Pessoa result = pessoaService.save(pessoa);
+        Pessoa result = service.save(pessoa);
 
         assertEquals(pessoa, result);
+
     }
 
     @Test
@@ -58,28 +61,30 @@ public class PessoaServiceTest {
 
         when(pessoaRepository.findAll()).thenReturn(pessoasList);
 
-        List<Pessoa> result = pessoaService.getAll();
+        List<Pessoa> result = service.getAll();
 
         assertEquals(pessoasList, result);
+
     }
 
     @Test
     public void findById() {
-        Long id = 0l;
+        Long id = 1l;
         PessoaRequest pessoaRequest = new PessoaRequest("nome", "data", 1l);
         Pessoa pessoa = new Pessoa(pessoaRequest);
 
         when(pessoaRepository.findById(id)).thenReturn(Optional.of(pessoa));
 
-        Pessoa result = pessoaService.findById(id);
+        Pessoa result = service.findById(id);
 
         assertEquals(pessoa, result);
+
     }
 
     @Test
     public void testFindByIdNotFound() {
         when(pessoaRepository.findById(1l)).thenReturn(Optional.empty());
-        assertThrows(PessoaNotFoundException.class, () -> pessoaService.findById(1l));
+        assertThrows(PessoaNotFoundException.class, () -> service.findById(1l));
     }
 
 }
