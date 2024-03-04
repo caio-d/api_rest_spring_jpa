@@ -28,7 +28,13 @@ public class PessoaService {
 
     public Pessoa findById(Long id) throws PessoaNotFoundException {
         return this.repository.findById(id)
-                .orElseThrow(() -> new PessoaNotFoundException("Carteira não encontrada com o ID: " + id));
+                .orElseThrow(() -> new PessoaNotFoundException("Pessoa não encontrada com o ID: " + id));
+    }
+
+    public Pessoa deleteById(Long id) {
+        Pessoa pessoa = this.findById(id);
+        this.repository.deleteById(id);
+        return pessoa;
     }
 
 }

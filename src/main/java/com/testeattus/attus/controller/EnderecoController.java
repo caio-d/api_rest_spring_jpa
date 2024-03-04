@@ -15,37 +15,37 @@ import java.util.List;
 @RequestMapping("/endereco")
 public class EnderecoController {
 
-    private final EnderecoService service;
+    private final EnderecoService enderecoService;
 
     @Autowired
     public EnderecoController(EnderecoService enderecoService) {
-        this.service = enderecoService;
+        this.enderecoService = enderecoService;
     }
 
     @PostMapping
     public ResponseEntity<EnderecoResponse> insert(@RequestBody EnderecoRequest enderecoRequest) {
         Endereco endereco = new Endereco(enderecoRequest);
-        service.save(endereco);
+        enderecoService.save(endereco);
         return ResponseEntity.ok().body(new EnderecoResponse(endereco));
     }
 
     @GetMapping
     public ResponseEntity<List<EnderecoResponse>> getAll() {
-        List<EnderecoResponse> response = service.getAll().stream()
+        List<EnderecoResponse> response = enderecoService.getAll().stream()
                 .map(EnderecoResponse::new).toList();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<EnderecoResponse> findById(@PathVariable Long id) {
-        Endereco endereco = service.findById(id);
+        Endereco endereco = enderecoService.findById(id);
         return ResponseEntity.ok(new EnderecoResponse(endereco));
     }
 
     @PatchMapping("{id}")
     public ResponseEntity<EnderecoResponse> patch(@PathVariable Long id, @RequestBody EnderecoRequest enderecoRequest) {
 
-        Endereco endereco = service.findById(id);
+        Endereco endereco = enderecoService.findById(id);
 
         if (enderecoRequest.logradouro() != null) endereco.setLogradouro(enderecoRequest.logradouro());
         if (enderecoRequest.cep() != null) endereco.setCep(enderecoRequest.cep());
@@ -54,9 +54,15 @@ public class EnderecoController {
         if (enderecoRequest.estado() != null) endereco.setEstado(enderecoRequest.estado());
         if (enderecoRequest.pessoa_id() != null) endereco.setPessoa_id(enderecoRequest.pessoa_id());
 
-        service.save(endereco);
+        enderecoService.save(endereco);
 
         return ResponseEntity.ok().body(new EnderecoResponse(endereco));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Endereco> deleteById(@PathVariable Long id) {
+        Endereco enderecoDeletado = enderecoService.deleteById(id);
+        return ResponseEntity.ok().body(enderecoDeletado);
     }
 
 }

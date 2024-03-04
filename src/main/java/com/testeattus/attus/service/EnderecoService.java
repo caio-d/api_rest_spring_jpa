@@ -30,4 +30,10 @@ public class EnderecoService {
         return this.repository.findById(id)
                 .orElseThrow(() -> new EnderecoNotFoundException("Endereco não encontrado com o ID: " + id));
     }
+
+    public Endereco deleteById(Long id) {
+        Endereco endereco = this.findById(id);
+        this.repository.deleteById(id);
+        return endereco;
+    }
 }

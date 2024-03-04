@@ -18,6 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -74,6 +75,13 @@ public class EnderecoServiceTest {
     public void testFindByIdNotFound() {
         when(repository.findById(1l)).thenReturn(Optional.empty());
         assertThrows(EnderecoNotFoundException.class, () -> service.findById(1l));
+    }
+
+    @Test
+    public void testDeleteById() {
+        Long id = 1l;
+        service.deleteById(id);
+        verify(service).deleteById(id);
     }
 
 }
