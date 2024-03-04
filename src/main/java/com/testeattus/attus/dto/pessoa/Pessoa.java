@@ -2,10 +2,7 @@ package com.testeattus.attus.dto.pessoa;
 
 import com.testeattus.attus.dto.endereco.Endereco;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;

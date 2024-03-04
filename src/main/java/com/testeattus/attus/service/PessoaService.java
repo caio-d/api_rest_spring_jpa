@@ -18,8 +18,8 @@ public class PessoaService {
         this.repository = pessoaRepository;
     }
 
-    public void save(Pessoa pessoa) {
-        this.repository.save(pessoa);
+    public Pessoa save(Pessoa pessoa) {
+        return this.repository.save(pessoa);
     }
 
     public List<Pessoa> getAll() {

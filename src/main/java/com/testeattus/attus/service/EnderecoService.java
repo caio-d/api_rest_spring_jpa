@@ -18,8 +18,8 @@ public class EnderecoService {
         this.repository = enderecoRepository;
     }
 
-    public void save(Endereco endereco) {
-        this.repository.save(endereco);
+    public Endereco save(Endereco endereco) {
+        return this.repository.save(endereco);
     }
 
     public List<Endereco> getAll() {
